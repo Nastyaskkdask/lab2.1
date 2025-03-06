@@ -10,10 +10,8 @@ let generateRand (count: int) (minL: int) (maxL: int) =
                 char (int 'a' + index) ] 
         String(List.toArray stringC) ]
 
-
 let addToList (add: char) (sList: string list) =
     List.map (fun str -> str + string add) sList
-
 
 printf "Введите кол-во строк: "
 let size = Console.ReadLine()
@@ -39,9 +37,6 @@ let check2 =
         exit 1
     else
         symbol.[0]
-
-
-
 
 let MyList = generateRand check1 minL maxL
 printfn "Исходный список:"
