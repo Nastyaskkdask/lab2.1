@@ -1,4 +1,4 @@
-﻿open System
+open System
 
 let generateRand (count: int) (minL: int) (maxL: int) =
     let rnd = new Random()
@@ -14,9 +14,14 @@ let addToList (add: char) (sList: string list) =
     List.map (fun str -> str + string add) sList
 
 printf "Введите кол-во строк: "
-let size = Console.ReadLine()
+let size = int(Console.ReadLine())
+
 let check1 = 
-    match System.Int32.TryParse(size) with
+    if size = 0 then
+        printfn "Список пуст."
+        exit 1 
+    match System.Int32.TryParse(string(size)) with
+
     | true, parsedInt -> parsedInt
     | false, _ -> 
         printfn "Ошибка: Введите целое число."
