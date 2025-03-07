@@ -3,7 +3,7 @@ open System
 printf "Введите кол-во строк: "
 let size = Console.ReadLine()
 let check1 = 
-    if size = "0" then
+    if int(size) <= 0 then
         printfn "Список пуст."
         exit 1 
     match System.Int32.TryParse(size) with
