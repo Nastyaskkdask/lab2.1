@@ -4,16 +4,15 @@ let rnd = new Random()
 
 let generateRandomString (minL: int) (maxL: int) =
     let length = rnd.Next(minL, maxL + 1)
-    let chars = Array.zeroCreate length
-    for i in 0..length - 1 do
+    [| for i in 0..length - 1 do
         let charType = rnd.Next(3) 
-        chars[i] <-
+        yield
             match charType with
             | 0 -> char (rnd.Next(10) + int '0') 
             | 1 -> char (rnd.Next(26) + int 'a') 
             | 2 -> char (rnd.Next(26) + int 'A') 
             | _ -> ' ' 
-    String chars
+    |] |> String
 
 let generateRand (count: int) (minL: int) (maxL: int) =
     [ for i in 1..count do
@@ -44,16 +43,17 @@ let MyList =
             exit 1
     | "2" ->
         printf "Введите строки:\n"
-        let mutable lines = []
-        let mutable line = Console.ReadLine()
-        if (String.IsNullOrEmpty(line)) then
+        let rec readLines acc =
+            match Console.ReadLine() with
+            | null | "" -> List.rev acc  
+            | line -> readLines (line :: acc)
+
+        let lines = readLines []
+        if List.isEmpty lines then
             printfn "\nСписок пуст."
             exit 1
-        while not (String.IsNullOrEmpty(line)) do
-            lines <- line :: lines
-            line <- Console.ReadLine()
-        List.rev lines
-        
+        else
+            lines
     | _ ->
         printfn "Ошибка: Некорректный выбор режима ввода."
         exit 1
@@ -79,3 +79,4 @@ MyList |> List.iter (printfn "%s")
 let newList = addToList check2 MyList
 printfn "\nНовый список:"
 newList |> List.iter (printfn "%s")
+
